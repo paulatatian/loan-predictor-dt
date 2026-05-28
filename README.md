@@ -1,190 +1,185 @@
-# 🏦 Predictor de Aprobación de Préstamos
+# 🎓 Predictor de Modalidad de Crédito ICETEX
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://TU-URL-AQUI.streamlit.app)
-[![Python](https://img.shields.io/badge/Python-3.11-blue)](https://python.org)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3.0-orange)](https://scikit-learn.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-
-## 📋 Descripción
-
-Aplicación web de Machine Learning que predice si una solicitud de préstamo bancario
-será **aprobada o rechazada**, basándose en características del solicitante como ingresos,
-historial crediticio, nivel educativo y otros factores financieros.
-
-Esta herramienta simula el proceso de evaluación crediticia automatizada que los bancos
-utilizan para agilizar la toma de decisiones sobre préstamos.
+> **Inteligencia Artificial I — Actividad 3**  
+> Modelo de clasificación con Árbol de Decisión aplicado a datos reales de créditos ICETEX Colombia
 
 ---
 
-## 🚀 Demostración
+## 📌 Descripción
 
-> 🔗 **[Ver aplicación en vivo](https://TU-URL-AQUI.streamlit.app)**
+Aplicación web interactiva que predice la **modalidad de crédito ICETEX** que recibiría un estudiante colombiano según su perfil socioeconómico y académico. El modelo fue entrenado con **109.139 registros reales** del sistema de créditos educativos de Colombia.
 
-![App Screenshot](docs/screenshot.png)
-
----
-
-## 🤖 Algoritmo utilizado
-
-**Árbol de Decisión (Decision Tree Classifier)**
-
-Un Árbol de Decisión es un modelo que aprende reglas de decisión a partir de los datos,
-similar a un diagrama de flujo. Cada nodo del árbol hace una pregunta sobre una variable
-(por ejemplo: "¿tiene buen historial crediticio?") y las ramas llevan hacia la decisión final.
-
-**¿Por qué es apropiado para este problema?**
-- **Interpretable:** Los bancos deben poder explicar por qué se aprueba o rechaza un préstamo (regulaciones financieras)
-- **Maneja variables mixtas:** Funciona bien con datos numéricos y categóricos sin normalización
-- **Bajo costo computacional:** Predicciones en tiempo real sin demoras
-- **Transparent:** Se puede visualizar el árbol completo de decisiones
-
-### Métricas de desempeño
-
-| Métrica | Valor |
-|---------|-------|
-| Accuracy | ~82% |
-| Precision | ~84% |
-| Recall | ~87% |
-| F1-Score | ~85% |
-
-> Los valores exactos dependen del split de datos. Ver notebook para resultados actualizados.
+Las modalidades que puede predecir son:
+- 📗 **Matrícula** — Financiación del valor de la matrícula universitaria
+- 📘 **Sostenimiento** — Apoyo para gastos de manutención del estudiante
+- 📙 **Otra modalidad** — Otros tipos de crédito disponibles en ICETEX
 
 ---
 
-## 📊 Dataset
+## 🧠 Algoritmo
 
-- **Fuente:** [Kaggle - Loan Prediction Dataset](https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset)
-- **Tamaño:** 614 registros reales
-- **Features utilizadas:** 11 variables
-
-| Variable | Descripción | Tipo |
-|----------|-------------|------|
-| Gender | Género del solicitante | Categórica |
-| Married | Estado civil | Categórica |
-| Dependents | Número de dependientes | Numérica |
-| Education | Nivel educativo | Categórica |
-| Self_Employed | ¿Trabaja por cuenta propia? | Categórica |
-| ApplicantIncome | Ingresos del solicitante | Numérica |
-| CoapplicantIncome | Ingresos del co-solicitante | Numérica |
-| LoanAmount | Monto del préstamo (miles) | Numérica |
-| Loan_Amount_Term | Plazo en meses | Numérica |
-| Credit_History | Historial crediticio (0/1) | Numérica |
-| Property_Area | Área de la propiedad | Categórica |
-
-**Variable objetivo:** `Loan_Status` (Y = Aprobado, N = Rechazado)
+| Parámetro | Valor |
+|---|---|
+| Algoritmo | Árbol de Decisión (`DecisionTreeClassifier`) |
+| Librería | `scikit-learn` |
+| Registros de entrenamiento | 109.139 |
+| Variables de entrada | 8 features |
+| Variable objetivo | `MODALIDAD DEL CRÉDITO` |
 
 ---
 
-## 🛠️ Instalación local
+## 📂 Estructura del Proyecto
 
-### Requisitos
-- Python 3.11+
-- pip
+```
+proyecto-icetex/
+│
+├── app/
+│   └── app.py                  # Aplicación Streamlit (UI principal)
+│
+├── models/
+│   ├── icetex_model.pkl        # Modelo entrenado serializado
+│   ├── label_encoders.pkl      # Encoders para variables categóricas
+│   └── clases.pkl              # Clases de la variable objetivo
+│
+├── notebooks/
+│   └── 01_training_icetex.ipynb  # Notebook de entrenamiento y EDA
+│
+├── data/                       # Dataset ICETEX (no incluido en el repo)
+│
+├── requirements.txt
+└── README.md
+```
 
-### Pasos
+---
+
+## ⚙️ Variables de Entrada (Features)
+
+| # | Variable | Tipo | Descripción |
+|---|---|---|---|
+| 1 | `SEXO AL NACER` | Categórica | Sexo biológico del solicitante |
+| 2 | `ESTRATO SOCIOECONÓMICO` | Numérica (1–6) | Estrato del hogar del estudiante |
+| 3 | `DEPARTAMENTO DE ORIGEN` | Categórica | Departamento colombiano de origen |
+| 4 | `CATEGORÍA DEL MUNICIPIO DE ORIGEN` | Categórica | Categoría del municipio según clasificación oficial |
+| 5 | `SECTOR IES` | Categórica | Sector de la institución educativa (Oficial / Privada) |
+| 6 | `NIVEL DE FORMACIÓN` | Categórica | Nivel académico (Técnico, Tecnólogo, Universitario, Posgrado, etc.) |
+| 7 | `MODALIDAD DE LÍNEA` | Categórica | Línea del crédito (Pregrado, Posgrado País, Exterior) |
+| 8 | `RANGO DEL VALOR TOTAL DESEMBOLSADO` | Categórica | Decil del valor desembolsado (I = menor, X = mayor) |
+
+---
+
+## 🚀 Instalación y Ejecución Local
+
+### 1. Clonar el repositorio
 
 ```bash
-# 1. Clonar el repositorio
-git clone https://github.com/TU-USUARIO/loan-predictor-dt.git
-cd loan-predictor-dt
+git clone https://github.com/tu-usuario/predictor-icetex.git
+cd predictor-icetex
+```
 
-# 2. Instalar dependencias
+### 2. Crear entorno virtual e instalar dependencias
+
+```bash
+python -m venv venv
+source venv/bin/activate        # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-# 3. Obtener el dataset
-# Descargar train.csv desde Kaggle y guardarlo como:
-# data/raw/loan_data.csv
+### 3. Entrenar el modelo
 
-# 4. Entrenar el modelo
-jupyter notebook notebooks/01_training.ipynb
-# (ejecutar todas las celdas)
+Abrir y ejecutar todas las celdas del notebook:
 
-# 5. Ejecutar la aplicación
+```bash
+jupyter notebook notebooks/01_training_icetex.ipynb
+```
+
+Esto generará los archivos `.pkl` en la carpeta `models/`.
+
+### 4. Lanzar la aplicación
+
+```bash
 streamlit run app/app.py
 ```
 
-La app abrirá automáticamente en `http://localhost:8501`
+La aplicación estará disponible en `http://localhost:8501`
 
 ---
 
-## 🗂️ Estructura del proyecto
+## 📦 Dependencias
 
 ```
-loan-predictor-dt/
-│
-├── README.md                   # Este archivo
-├── requirements.txt            # Dependencias Python
-├── .gitignore                  # Archivos ignorados por Git
-│
-├── data/
-│   ├── raw/                    # Dataset original (loan_data.csv)
-│   └── processed/              # Datos procesados
-│
-├── notebooks/
-│   └── 01_training.ipynb       # Notebook de entrenamiento completo
-│
-├── models/
-│   ├── loan_model.pkl          # Modelo entrenado serializado
-│   ├── feature_names.pkl       # Nombres de features
-│   └── label_mapeos.pkl        # Mapeos de variables categóricas
-│
-├── app/
-│   └── app.py                  # Aplicación Streamlit
-│
-└── docs/
-    ├── arbol_decision.png      # Visualización del árbol
-    ├── matriz_confusion.png    # Matriz de confusión
-    ├── feature_importance.png  # Importancia de variables
-    └── presentacion.pdf        # Presentación final
+streamlit
+scikit-learn
+pandas
+numpy
+joblib
+```
+
+Instalar con:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ---
 
-## 📱 Uso de la aplicación
+## 🖥️ Vista de la Aplicación
 
-1. Ingresa los datos del solicitante en el formulario de la izquierda:
-   - Datos personales (género, estado civil, educación)
-   - Datos financieros (ingresos, monto del préstamo, plazo)
-   - Historial crediticio y área de la propiedad
-2. Presiona el botón **"Analizar Solicitud"**
-3. El modelo muestra:
-   - ✅ Aprobado o ❌ Rechazado
-   - Probabilidad de cada resultado
-   - Los factores más influyentes en la decisión
+La interfaz cuenta con:
+
+- **Formulario de entrada** con los 8 campos del perfil del estudiante
+- **Resultado de predicción** con tarjeta visual codificada por color
+- **Gráfico de probabilidades** por cada modalidad posible
+- **Variables más influyentes** del modelo para la predicción actual
+- **Panel lateral** con información del modelo y el dataset
 
 ---
 
-## ☁️ Despliegue
+## 🗃️ Fuente de Datos
 
-La aplicación está desplegada en **Streamlit Cloud** (gratuito):
+- **Origen:** [ICETEX — Datos Abiertos Colombia](https://www.datos.gov.co)
+- **Dataset:** Créditos ICETEX Otorgados
+- **Registros:** 109.139 créditos reales
+- **País:** 🇨🇴 Colombia
 
-1. Subir código a GitHub (repositorio público)
-2. Ir a [streamlit.io/cloud](https://streamlit.io/cloud)
-3. Conectar el repositorio
-4. Seleccionar `app/app.py` como archivo principal
-5. Hacer clic en **Deploy**
+> ⚠️ El dataset original no está incluido en este repositorio. Descargarlo desde el portal de Datos Abiertos del Gobierno de Colombia.
 
 ---
 
-## 👥 Autores
+## 📊 Pipeline de Entrenamiento
 
-| Nombre | Rol |
-|--------|-----|
-| [Nombre 1] | Entrenamiento del modelo y análisis de datos |
-| [Nombre 2] | Desarrollo de la aplicación web |
-| [Nombre 3] | Despliegue en la nube y documentación |
+```
+Datos crudos (CSV)
+    │
+    ▼
+Limpieza y preprocesamiento
+    │  - Eliminación de nulos
+    │  - LabelEncoding de variables categóricas
+    ▼
+División train/test (80/20)
+    │
+    ▼
+Entrenamiento DecisionTreeClassifier
+    │
+    ▼
+Evaluación del modelo
+    │  - Accuracy
+    │  - Matriz de confusión
+    │  - Reporte de clasificación
+    ▼
+Serialización con joblib
+    │  → icetex_model.pkl
+    │  → label_encoders.pkl
+    │  → clases.pkl
+```
+
+---
+
+## 👩‍💻 Autores
+
+Desarrollado como parte de la asignatura **Inteligencia Artificial I** — Actividad 3.
 
 ---
 
 ## 📄 Licencia
 
-MIT License — ver [LICENSE](LICENSE) para detalles.
-
----
-
-## 📚 Referencias
-
-- Kaggle Dataset: https://www.kaggle.com/datasets/altruistdelhite04/loan-prediction-problem-dataset
-- scikit-learn Decision Trees: https://scikit-learn.org/stable/modules/tree.html
-- Streamlit Documentation: https://docs.streamlit.io
-- Streamlit Cloud Deployment: https://docs.streamlit.io/streamlit-community-cloud
+Este proyecto es de uso académico. Los datos pertenecen al sistema de datos abiertos del Gobierno de Colombia.
