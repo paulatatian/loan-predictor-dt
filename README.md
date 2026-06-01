@@ -16,6 +16,19 @@ Las modalidades que puede predecir son:
 
 ---
 
+## ❗ Problemática y Justificación
+
+En Colombia, el acceso a la educación superior sigue siendo uno de los principales retos socioeconómicos del país. Según datos del ICETEX, una proporción significativa de estudiantes que solicitan crédito educativo desconoce cuál modalidad de financiación se ajusta mejor a su perfil, lo que genera:
+
+- **Solicitudes mal dirigidas:** Los solicitantes invierten tiempo y esfuerzo en tramitar modalidades que no corresponden a su condición socioeconómica o nivel de formación, aumentando las tasas de rechazo.
+- **Deserción por desinformación:** Estudiantes que podrían acceder a financiación de sostenimiento no lo solicitan por no conocer que aplican a ella, lo que en muchos casos los lleva a abandonar sus estudios.
+- **Inequidad en el acceso:** Las poblaciones más vulnerables (estratos 1–2, municipios de categorías bajas, regiones apartadas) son precisamente las que menos información tienen sobre las opciones disponibles, perpetuando la brecha educativa.
+- **Carga operativa en ICETEX:** El volumen de solicitudes con información incompleta o modalidad incorrecta genera reprocesos administrativos que ralentizan la asignación de créditos.
+
+Esta aplicación responde directamente a esa necesidad: **orientar al estudiante antes de que presente su solicitud**, indicándole con base en su perfil real cuál modalidad tiene mayor probabilidad de corresponderle. Esto no solo mejora la experiencia del solicitante, sino que potencialmente reduce los tiempos de trámite y aumenta las tasas de aprobación.
+
+---
+
 ## 🧠 Algoritmo
 
 | Parámetro | Valor |
@@ -134,17 +147,6 @@ La interfaz cuenta con:
 
 ---
 
-## 🗃️ Fuente de Datos
-
-- **Origen:** [ICETEX — Datos Abiertos Colombia](https://www.datos.gov.co)
-- **Dataset:** Créditos ICETEX Otorgados
-- **Registros:** 109.139 créditos reales
-- **País:** 🇨🇴 Colombia
-
-> ⚠️ El dataset original no está incluido en este repositorio. Descargarlo desde el portal de Datos Abiertos del Gobierno de Colombia.
-
----
-
 ## 📊 Pipeline de Entrenamiento
 
 ```
@@ -171,6 +173,27 @@ Serialización con joblib
     │  → label_encoders.pkl
     │  → clases.pkl
 ```
+
+---
+
+## 🗃️ Fuente de Datos
+
+- **Origen:** [ICETEX — Datos Abiertos Colombia](https://www.datos.gov.co)
+- **Dataset:** Créditos ICETEX Otorgados
+- **Registros:** 109.139 créditos reales
+- **País:** 🇨🇴 Colombia
+
+> ⚠️ El dataset original no está incluido en este repositorio. Descargarlo desde el portal de Datos Abiertos del Gobierno de Colombia.
+
+---
+
+## ✅ Conclusión
+
+Este proyecto demuestra cómo la inteligencia artificial puede aplicarse a problemas concretos de política pública y equidad educativa. A través de un modelo de árbol de decisión entrenado con más de 109.000 registros reales, se logró construir un sistema de apoyo a la decisión que traduce variables del perfil del estudiante en una predicción interpretable y accionable sobre la modalidad de crédito más probable.
+
+Más allá del ejercicio académico, la aplicación evidencia el potencial de los modelos de clasificación para reducir asimetrías de información en procesos críticos como el acceso al crédito educativo. Un estudiante mejor orientado tiene más probabilidades de completar su solicitud correctamente, de acceder al financiamiento que le corresponde y, en última instancia, de continuar con su formación profesional.
+
+Como trabajo futuro, se identifican oportunidades para enriquecer el modelo con variables adicionales (como puntaje Saber 11 o situación laboral del núcleo familiar), explorar algoritmos de mayor capacidad predictiva como Random Forest o Gradient Boosting, e integrar el sistema con fuentes de datos en tiempo real del portal de Datos Abiertos de Colombia, con el fin de mantener el modelo actualizado y ampliar su utilidad en escenarios reales de orientación estudiantil.
 
 ---
 
