@@ -12,7 +12,7 @@ Aplicación web interactiva que predice la **modalidad de crédito ICETEX** que 
 Las modalidades que puede predecir son:
 - 📗 **Matrícula** — Financiación del valor de la matrícula universitaria
 - 📘 **Sostenimiento** — Apoyo para gastos de manutención del estudiante
-- 📙 **Otra modalidad** — Otros tipos de crédito disponibles en ICETEX
+- 📙 **Otra modalidad** — Otros tipos de crédito disponibles git add README.mden ICETEX
 
 ---
 
@@ -81,7 +81,16 @@ proyecto-icetex/
 ---
 
 ## 🚀 Instalación y Ejecución Local
+## 🚀 Instalación y Ejecución Local
 
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/predictor-icetex.git
+cd predictor-icetex
+```
+
+### 2. Crear entorno virtual e instalar dependencias
 ### 1. Clonar el repositorio
 
 ```bash
@@ -92,6 +101,8 @@ cd predictor-icetex
 ### 2. Crear entorno virtual e instalar dependencias
 
 ```bash
+python -m venv venv
+source venv/bin/activate        # En Windows: venv\Scripts\activate
 python -m venv venv
 source venv/bin/activate        # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -110,9 +121,25 @@ Esto generará los archivos `.pkl` en la carpeta `models/`.
 ### 4. Lanzar la aplicación
 
 ```bash
+```
+
+### 3. Entrenar el modelo
+
+Abrir y ejecutar todas las celdas del notebook:
+
+```bash
+jupyter notebook notebooks/01_training_icetex.ipynb
+```
+
+Esto generará los archivos `.pkl` en la carpeta `models/`.
+
+### 4. Lanzar la aplicación
+
+```bash
 streamlit run app/app.py
 ```
 
+La aplicación estará disponible en `http://localhost:8501`
 La aplicación estará disponible en `http://localhost:8501`
 
 ---
@@ -205,4 +232,5 @@ Desarrollado como parte de la asignatura **Inteligencia Artificial I** — Activ
 
 ## 📄 Licencia
 
+Este proyecto es de uso académico. Los datos pertenecen al sistema de datos abiertos del Gobierno de Colombia.
 Este proyecto es de uso académico. Los datos pertenecen al sistema de datos abiertos del Gobierno de Colombia.
